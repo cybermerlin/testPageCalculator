@@ -12,7 +12,7 @@
 			 * @property {Array} data
 			 * @cfg {Array} data
 			 */
-			this.data = ar.concat([]);
+			this.data = (ar || []).concat([]);
 			/**
 			 * limit count items on the page
 			 * @property {Number} [limit=25]
@@ -21,14 +21,14 @@
 			this.limit = c || 25;
 			/**
 			 * count of items on the last page
-			 * @propert {Number} cntItemsLastPage
+			 * @property {Number} countItemsLastPage
 			 */
-			this.cntItemsLastPage = this.data.length % this.limit;
+			this.countItemsLastPage = (this.data.length % this.limit) || this.limit;
 			/**
 			 * total pages
 			 * @property {Number} pages
 			 */
-			this.pages = Math.floor(this.data.length / this.limit)
+			this.pages = Math.ceil(this.data.length / this.limit);
 		}
 
 
@@ -45,35 +45,39 @@
 		 * @return {Number}
 		 */
 		getTotalPages() {
-			return Math.ceil(this.data.length / this.limit)
+			return this.pages
 		}
 
 		/**
 		 * returns the number of items on the specified page. pageIndex is zero­based.
-		 * This method should return -­1 for pageIndex values that are out of range.
-		 * @param {Number} [n=0]
+		 * This method should return -1 for pageIndex values that are out of range.
+		 * @param {Number} [n=0] number of page
 		 * @return {Number}
 		 */
-		getItemsOnPage(n = 0) {
-			return n > this.pages || n < 0
-					? -1
-					: n === this.pages
-							? this.cntItemsLastPage
-							: this.limit;
+		getCountItemsOnPage(n = 0) {
+			let result = -1;
+			if (parseInt(n) === n && n >= 0 && n < this.pages) {
+				result = n === this.pages - 1
+						? this.countItemsLastPage
+						: this.limit;
+			}
+			return result;
 		}
 
 		/**
 		 * determines what page an item is on. Zero­based indexes.
-		 * This method should return ­-1 for itemIndex values that are out of range.
-		 * @param {Number} [i=0]
+		 * This method should return -1 for itemIndex values that are out of range.
+		 * @param {Number} [i=0] item index
 		 * @return {Number}
 		 */
-		getPageIndexByItem(i = 0) {
-			return i > this.data.length || i < 0
-					? -1
-					: i > this.limit
-							? Math.ceil(i / this.limit) - 1
-							: 0
+		getPageIndexByItemIndex(i = 0) {
+			let result = -1;
+			if (parseInt(i) === i && i < this.data.length && i >= 0) {
+				result = i >= this.limit
+						? Math.ceil(i / this.limit) - 1
+						: 0;
+			}
+			return result;
 		}
 	}
 

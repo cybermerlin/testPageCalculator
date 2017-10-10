@@ -1,4 +1,7 @@
 {
+  "name": "PageCalculator",
+  "version": "0.0.2",
+  "description": "test PageCalculator",
   "devDependencies": {
     "chai": "^4.0.0"
   }

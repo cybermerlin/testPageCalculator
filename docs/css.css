@@ -1,0 +1,16 @@
+.class-categories .section .middle-column {
+	width: 380px;
+}
+.class-categories .section .left-column {
+	width: 380px;
+}
+.class-categories .section:nth-child(3) .left-column{
+	width: 100% !important;
+}
+.class-categories .section:nth-child(3) .left-column .links {
+	display: flex;
+	flex-wrap: wrap;
+}
+.class-categories .section:nth-child(3) .left-column .links li{
+	width: 30%;
+}
